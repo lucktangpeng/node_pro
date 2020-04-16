@@ -26,17 +26,19 @@
         ></el-input>
       </el-form-item>
       <div class="buttonBox" v-if="!status">
-        <el-button class="Button" type="primary" @click="LoginEvent()"
+        <el-button class="Button" type="primary" @click="submitForm('ruleForm')"
           >登陆</el-button
         >
-        <el-button class="Button" type="primary">注册</el-button>
-      </div>
-      <div class="buttonBox" v-else>
-        <el-button class="Button" type="primary" @click="RegisterEvent()"
+        <el-button class="Button" type="primary" @click="SkipRegister()"
           >注册</el-button
         >
-        <el-button class="Button" type="primary"
-          ><router-link to="/login">取消</router-link></el-button
+      </div>
+      <div class="buttonBox" v-else>
+        <el-button class="Button" type="primary" @click="submitForm('ruleForm')"
+          >注册</el-button
+        >
+        <el-button class="Button" type="primary" @click="SkipRegister()"
+          >取消</el-button
         >
       </div>
     </el-form>
@@ -68,11 +70,28 @@ export default {
     };
   },
   methods: {
-    LoginEvent() {
-      console.log(this.ruleForm);
+    SkipRegister() {
+      if (!this.status) {
+        this.$router.push({ path: "/register" });
+      } else {
+        this.$router.push({ path: "/login" });
+      }
     },
-    RegisterEvent() {
-      console.log(this.ruleForm);
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          if (!this.status) {
+            console.log("login" + this.ruleForm);
+            this.$store.commit("ChangeIsSign", "1");
+            this.$router.push({ name: "home" });
+          } else {
+            console.log("register" + this.ruleForm);
+          }
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     }
   }
 };

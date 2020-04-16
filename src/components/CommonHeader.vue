@@ -12,9 +12,18 @@
           active-text-color="#e7e421"
           @select="SelectEvent()"
         >
-          <el-menu-item :index="1">首页</el-menu-item>
-          <el-menu-item :index="2">我的博客</el-menu-item>
-          <el-menu-item :index="3" class="login">登陆</el-menu-item>
+          <el-menu-item index="1"
+            ><router-link to="/">首页</router-link></el-menu-item
+          >
+          <el-menu-item index="2" v-if="IsSign"
+            ><router-link to="/article">我的博客</router-link></el-menu-item
+          >
+          <el-menu-item index="3" class="login" v-if="!IsSign"
+            >登陆</el-menu-item
+          >
+          <el-menu-item index="3" class="login" v-else @click="SkipPersonal()"
+            ><router-link to="/personal">唐总</router-link></el-menu-item
+          >
         </el-menu>
       </el-col>
     </el-row>
@@ -31,6 +40,14 @@ export default {
   methods: {
     SelectEvent(index) {
       this.activeIndex = index + "";
+    },
+    SkipPersonal() {
+      this;
+    }
+  },
+  computed: {
+    IsSign() {
+      return this.$store.state.IsSign;
     }
   }
 };

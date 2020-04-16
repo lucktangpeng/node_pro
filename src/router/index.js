@@ -14,9 +14,19 @@ const routes = [
         component: () => import("@/components/CommonContent.vue")
       },
       {
-        path: "detail",
+        path: "detail:id",
         name: "detail",
         component: () => import("@/components/CommonDetail.vue")
+      },
+      {
+        path: "/personal",
+        name: "personal",
+        component: () => import("@/components/CommonPersonal.vue")
+      },
+      {
+        path: "/article",
+        name: "article",
+        component: () => import("@/components/CommonArticle.vue")
       }
     ]
   },

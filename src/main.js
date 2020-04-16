@@ -11,6 +11,26 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(mavonEditor);
 
+router.beforeEach((to, from, next) => {
+  const token = "ssdsd";
+  if (token) {
+    store.commit("ChangeIsSign", "1");
+  }
+  if (to.path === "/") {
+    if (token) {
+      next();
+    } else {
+      next({ name: "login" });
+    }
+  }
+  console.log(to.path);
+  console.log(from);
+  next();
+  // if (to.name === "home") {
+
+  // }
+});
+
 new Vue({
   router,
   store,
