@@ -25,9 +25,19 @@
           placeholder="请输入昵称"
         ></el-input>
       </el-form-item>
-      <div class="buttonBox">
-        <el-button class="Button" type="primary">登陆</el-button>
+      <div class="buttonBox" v-if="!status">
+        <el-button class="Button" type="primary" @click="LoginEvent()"
+          >登陆</el-button
+        >
         <el-button class="Button" type="primary">注册</el-button>
+      </div>
+      <div class="buttonBox" v-else>
+        <el-button class="Button" type="primary" @click="RegisterEvent()"
+          >注册</el-button
+        >
+        <el-button class="Button" type="primary"
+          ><router-link to="/login">取消</router-link></el-button
+        >
       </div>
     </el-form>
   </div>
@@ -35,6 +45,12 @@
 
 <script>
 export default {
+  props: {
+    status: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       ruleForm: {
@@ -52,9 +68,12 @@ export default {
     };
   },
   methods: {
-    // resetForm(formName) {
-    //   this.$refs[formName].resetFields();
-    // }
+    LoginEvent() {
+      console.log(this.ruleForm);
+    },
+    RegisterEvent() {
+      console.log(this.ruleForm);
+    }
   }
 };
 </script>
