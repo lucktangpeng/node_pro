@@ -14,6 +14,11 @@ const routes = [
         component: () => import("@/components/CommonContent.vue")
       },
       {
+        path: "detail",
+        name: "detail",
+        component: () => import("@/components/CommonDetail.vue")
+      },
+      {
         path: "detail:id",
         name: "detail",
         component: () => import("@/components/CommonDetail.vue")
@@ -27,6 +32,11 @@ const routes = [
         path: "/article",
         name: "article",
         component: () => import("@/components/CommonArticle.vue")
+      },
+      {
+        path: "/article/detail",
+        name: "articledetail",
+        component: () => import("@/components/CommonArticleDetail.vue")
       }
     ]
   },
