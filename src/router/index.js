@@ -16,17 +16,26 @@ const routes = [
       {
         path: "detail",
         name: "detail",
-        component: () => import("@/components/CommonDetail.vue")
+        component: () => import("@/components/CommonDetail.vue"),
+        meta: {
+          requireAuth: true
+        }
       },
       {
         path: "detail:id",
         name: "detail",
-        component: () => import("@/components/CommonDetail.vue")
+        component: () => import("@/components/CommonDetail.vue"),
+        meta: {
+          requireAuth: true
+        }
       },
       {
         path: "/personal",
         name: "personal",
-        component: () => import("@/components/CommonPersonal.vue")
+        component: () => import("@/components/CommonPersonal.vue"),
+        meta: {
+          requireAuth: true
+        }
       },
       {
         path: "/article",

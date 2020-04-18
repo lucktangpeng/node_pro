@@ -19,7 +19,7 @@
           placeholder="请输入密码"
         ></el-input>
       </el-form-item>
-      <el-form-item class="item" label="昵称" prop="nikname">
+      <el-form-item class="item" label="昵称" prop="nikname" v-if="status">
         <el-input
           v-model="ruleForm.nikname"
           placeholder="请输入昵称"
@@ -42,14 +42,17 @@
         >
       </div>
     </el-form>
+    <div v-loading.fullscreen.lock="loading"></div>
   </div>
 </template>
 
 <script>
+import Cookie from "js-cookie";
 export default {
   props: {
     status: {
       type: Boolean,
+
       default: false
     }
   },
@@ -66,7 +69,8 @@ export default {
         ],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }],
         nikname: [{ required: true, message: "请输入昵称", trigger: "blur" }]
-      }
+      },
+      loading: false
     };
   },
   methods: {
@@ -80,11 +84,25 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          if (!this.status) {
+          this.loading = true;
+          // 注册请求
+          if (this.status) {
             console.log("login" + this.ruleForm);
-            this.$store.commit("ChangeIsSign", "1");
-            this.$router.push({ name: "home" });
+            this.$axios.post("/user/register", this.ruleForm).then(res => {
+              console.log(res);
+            });
+            // this.$store.commit("ChangeIsSign", "1");
+            // this.$router.push({ name: "home" });
           } else {
+            // 登陆请求
+            this.$axios.post("/user/login", this.ruleForm).then(res => {
+              console.log(res.token);
+              Cookie.set("token", res.token);
+              this.$store.commit("SetToken", res.token);
+              this.$router.push({ name: "home" });
+              this.loading = false;
+            });
+
             console.log("register" + this.ruleForm);
           }
         } else {
